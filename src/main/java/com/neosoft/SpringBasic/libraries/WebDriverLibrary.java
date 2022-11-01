@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +22,7 @@ public class WebDriverLibrary {
     @ConditionalOnProperty(name = "browser", havingValue = "chrome")
     public WebDriver getChromeDriver() {
         ChromeOptions chromeOptions = new ChromeOptions();
-        //chromeOptions.addArguments("--headless");
+        chromeOptions.addArguments("--headless");
         WebDriverManager.chromedriver().setup();
         return new ChromeDriver(chromeOptions);
     }
@@ -30,11 +31,10 @@ public class WebDriverLibrary {
     @Scope("browserscope")
     @ConditionalOnProperty(name = "browser", havingValue = "firefox")
     public WebDriver getFirefoxDriver() {
-//        ChromeOptions chromeOptions = new ChromeOptions();
-//        //chromeOptions.addArguments("--headless");
+        FirefoxOptions firefoxOptions = new FirefoxOptions();
+        firefoxOptions.addArguments("--headless");
         WebDriverManager.firefoxdriver().setup();
-        FirefoxDriver firefoxDriver = new FirefoxDriver();
-        return firefoxDriver;
+        return new FirefoxDriver(firefoxOptions);
     }
 
 
